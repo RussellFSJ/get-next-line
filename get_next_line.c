@@ -6,7 +6,13 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/23 22:10:46 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/01/23 22:48:17 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
+char *get_next_line(int fd)
+{
+	
+}
