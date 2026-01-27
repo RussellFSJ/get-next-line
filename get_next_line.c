@@ -6,7 +6,7 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/24 06:39:27 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/01/27 20:22:55 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,28 @@ char *get_next_line(int fd)
 			break;
 		buffer[bytes_read] = '\0';
 		s = ft_strjoin(s, buffer);
-
-
 	}
-	return ("");
+	return (get_line(s));
 }
+
+char	*get_line(const char *s)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	while (s[i] && s[i] != '\n')
+		i++;
+	line = malloc(i + s[i] == '\n' + 1);
+	if (!line)
+		return (NULL);
+	ft_memcpy(line, s, i);
+	if (s[i++] == '\n')
+	{
+		line[i] = '\n';
+		i++;
+	}
+	line[i] = '\0';
+	return (line);
+}
+
