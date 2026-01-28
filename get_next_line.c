@@ -6,7 +6,7 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/27 20:22:55 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/01/28 22:40:54 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 char *get_next_line(int fd)
 {
-	static char	*s;
+	static char	*stash;
+	char		*line;
 	char 		buffer[BUFFER_SIZE + 1];
 	int			bytes_read;
-	
-	if (fd == -1)
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (!ft_strchr(s, '\n'))
+	while (!ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
 			break;
 		buffer[bytes_read] = '\0';
-		s = ft_strjoin(s, buffer);
+		stash = ft_strjoin(stash, buffer);
 	}
-	return (get_line(s));
+	line = get_line(stash);
+	stash = update_stash(stash);
+	return (get_line(stash));
 }
 
 char	*get_line(const char *s)
@@ -39,7 +42,7 @@ char	*get_line(const char *s)
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
-	line = malloc(i + s[i] == '\n' + 1);
+	line = malloc(i + (s[i] == '\n') + 1);
 	if (!line)
 		return (NULL);
 	ft_memcpy(line, s, i);
@@ -52,3 +55,28 @@ char	*get_line(const char *s)
 	return (line);
 }
 
+char	*update_stash(char* stash)
+{
+	int		i;
+	int		j;
+	char	*new_stash;
+
+	i = 0;
+	if (ft_strlen(stash) == 0)
+	{
+		free(stash);
+		return (NULL);
+	}
+	i++;
+	new_stash = malloc(ft_strlen(stash + i) + 1);
+	if (!new_stash)
+		return (NULL);
+	j = 0;
+	while(stash[i])
+	{
+		new_stash[j++] = stash[i++];
+	}
+	new_stash[j] = '\0';
+	free(stash);
+	return (new_stash);
+}
