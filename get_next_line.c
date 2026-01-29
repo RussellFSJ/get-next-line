@@ -6,22 +6,23 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/28 22:40:54 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/01/29 20:02:08 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*stash;
+	char		buffer[BUFFER_SIZE + 1];
+	size_t		bytes_read;
 	char		*line;
-	char 		buffer[BUFFER_SIZE + 1];
-	int			bytes_read;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (!ft_strchr(stash, '\n'))
+	bytes_read = 0;
+	while(!ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
@@ -29,12 +30,12 @@ char *get_next_line(int fd)
 		buffer[bytes_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
 	}
-	line = get_line(stash);
+	line = process_line(stash);
 	stash = update_stash(stash);
-	return (get_line(stash));
+	return (line);
 }
 
-char	*get_line(const char *s)
+char	*process_line(const char *s)
 {
 	int		i;
 	char	*line;
