@@ -6,7 +6,7 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/29 20:02:08 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/01/30 21:41:01 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ char	*get_next_line(int fd)
 	line = process_line(stash);
 	stash = update_stash(stash);
 	return (line);
+}
+
+char	*process_line(const char *s)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	
+	
 }
 
 char	*process_line(const char *s)
