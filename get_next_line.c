@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/30 21:41:01 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/02/05 03:59:06 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	bytes_read = 0;
-	while(!ft_strchr(stash, '\n'))
+	while(!stash || !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read <= 0)
@@ -30,22 +30,14 @@ char	*get_next_line(int fd)
 		buffer[bytes_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
 	}
+	if (!stash || *stash == '\0')
+		return (NULL);
 	line = process_line(stash);
 	stash = update_stash(stash);
 	return (line);
 }
 
-char	*process_line(const char *s)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	
-	
-}
-
-char	*process_line(const char *s)
+static char	*process_line(const char *s)
 {
 	int		i;
 	char	*line;
@@ -53,41 +45,36 @@ char	*process_line(const char *s)
 	i = 0;
 	while (s[i] && s[i] != '\n')
 		i++;
-	line = malloc(i + (s[i] == '\n') + 1);
+	if (s[i] == '\n')
+		i++;
+	line = malloc(i + 1);
 	if (!line)
 		return (NULL);
 	ft_memcpy(line, s, i);
-	if (s[i++] == '\n')
-	{
-		line[i] = '\n';
-		i++;
-	}
 	line[i] = '\0';
 	return (line);
 }
-
-char	*update_stash(char* stash)
+static char	*update_stash(char* stash)
 {
 	int		i;
-	int		j;
+	size_t	length;
 	char	*new_stash;
 
 	i = 0;
-	if (ft_strlen(stash) == 0)
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	if (!stash[i])
 	{
 		free(stash);
 		return (NULL);
 	}
 	i++;
-	new_stash = malloc(ft_strlen(stash + i) + 1);
+	length = ft_strlen(stash + i);
+	new_stash = malloc(length + 1);
 	if (!new_stash)
 		return (NULL);
-	j = 0;
-	while(stash[i])
-	{
-		new_stash[j++] = stash[i++];
-	}
-	new_stash[j] = '\0';
+	ft_memcpy(new_stash, stash + i, length);
+	new_stash[length] = '\0';
 	free(stash);
 	return (new_stash);
 }

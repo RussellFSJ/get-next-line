@@ -3,30 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:43 by rfoo              #+#    #+#             */
-/*   Updated: 2026/01/29 19:59:47 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/02/05 03:58:07 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	strlen1;
-	size_t	strlen2;
-	char	*str;
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
 
-	strlen1 = ft_strlen(s1);
-	strlen2 = ft_strlen(s2);
-	str = malloc(strlen1 + strlen2 + 1);
-	if (!str)
-		return (NULL);
-	ft_memcpy(str, s1, strlen1);
-	ft_memcpy(str + strlen1, s2, strlen2);
-	str[strlen1 + strlen2] = '\0';
-	return (str);
+size_t	ft_strlen(const char *s)
+{
+	size_t	length;
+
+	length = 0;
+	while (s[length])
+	{
+		length++;
+	}
+	return (length);
 }
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
@@ -46,28 +54,19 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-size_t	ft_strlen(const char *s)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	length;
+	size_t	strlen1;
+	size_t	strlen2;
+	char	*str;
 
-	length = 0;
-	while (s[length])
-	{
-		length++;
-	}
-	return (length);
+	strlen1 = ft_strlen(s1);
+	strlen2 = ft_strlen(s2);
+	str = malloc(strlen1 + strlen2 + 1);
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1, strlen1);
+	ft_memcpy(str + strlen1, s2, strlen2);
+	str[strlen1 + strlen2] = '\0';
+	return (str);
 }
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s);
-	return (NULL);
-}
-
