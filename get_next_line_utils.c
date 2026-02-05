@@ -6,7 +6,7 @@
 /*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:43 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/05 06:26:48 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 04:43:49 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_strdup(const char *s)
 	return (dest);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	strlen1;
 	size_t	strlen2;

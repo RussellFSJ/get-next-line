@@ -6,26 +6,32 @@
 /*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/05 03:59:06 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 05:12:42 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+static char	*handle_invalid_fd(char *stash);
+static char	*process_line(const char *s);
+static char	*update_stash(char* stash);
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		buffer[BUFFER_SIZE + 1];
-	size_t		bytes_read;
+	ssize_t		bytes_read;
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	bytes_read = 0;
-	while(!stash || !ft_strchr(stash, '\n'))
+	while (!stash || !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read <= 0)
+		if (bytes_read < 0)
+			return (handle_invalid_fd(stash));
+		if (bytes_read == 0)
 			break;
 		buffer[bytes_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
@@ -35,6 +41,16 @@ char	*get_next_line(int fd)
 	line = process_line(stash);
 	stash = update_stash(stash);
 	return (line);
+}
+
+static char	*handle_invalid_fd(char *stash)
+{
+	if (stash)
+	{
+		free(stash);
+		stash = NULL;
+	}
+	return (NULL);
 }
 
 static char	*process_line(const char *s)
@@ -54,6 +70,7 @@ static char	*process_line(const char *s)
 	line[i] = '\0';
 	return (line);
 }
+
 static char	*update_stash(char* stash)
 {
 	int		i;
