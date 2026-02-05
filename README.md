@@ -48,25 +48,25 @@ echo -n "HelloaWorldaFroma42 SGa" > file.txt
 
 int main(void)
 {
-    int fd;
-    char *line;
-	int line_no;
+	int		fd;
+	char 	*line;
+	int 	line_no;
 
-    fd = open("file.txt", O_RDONLY);
+	fd = open("file.txt", O_RDONLY);
 	line_no = 1;
-    if (fd == -1)
-    {
-        printf("Error opening file.txt");
-        return (1);
-    }
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("Line %d: %s\n", line_no, line);
+	if (fd == -1)
+	{
+		printf("Error opening file.txt");
+		return (1);
+	}
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("Line %d: %s\n", line_no, line);
 		line_no++;
-        free(line);
-    }
-    close(fd);
-    printf("EOF reached on file.txt\n");
+		free(line);
+	}
+	close(fd);
+	printf("EOF reached on file.txt\n");
 	return (0);
 }
 ```
@@ -79,18 +79,18 @@ int main(void)
 
 int main(void)
 {
-    int fd;
-    char *line;
-	int line_no;
+	int		fd;
+	char	*line;
+	int		line_no;
 
 	fd = 0;
 	line_no = 1;
-    while ((line = get_next_line(fd)) != NULL) 
+	while ((line = get_next_line(fd)) != NULL) 
 	{ 
-        printf("Line %d: %s\n", line_no, line);
+		printf("Line %d: %s\n", line_no, line);
 		line_no++;
-        free(line);
-	} 
+		free(line);
+	}
 	printf("EOF reached on stdin\n");
 	return (0);
 }
