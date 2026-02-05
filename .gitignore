@@ -1,5 +1,6 @@
-// pdf files
+// files
 *.pdf
+*.txt
 
 // executables
 *.out
@@ -13,3 +14,4 @@
 
 // vs code settings
 .vscode
+
