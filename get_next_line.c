@@ -6,13 +6,13 @@
 /*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/06 05:12:42 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 05:16:35 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*handle_invalid_fd(char *stash);
+static char	*handle_read_fail(char *stash);
 static char	*process_line(const char *s);
 static char	*update_stash(char* stash);
 
@@ -30,7 +30,7 @@ char	*get_next_line(int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (handle_invalid_fd(stash));
+			return (handle_read_fail(stash));
 		if (bytes_read == 0)
 			break;
 		buffer[bytes_read] = '\0';
@@ -43,7 +43,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-static char	*handle_invalid_fd(char *stash)
+static char	*handle_read_fail(char *stash)
 {
 	if (stash)
 	{
