@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:48 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/06 04:57:29 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:29:55 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);

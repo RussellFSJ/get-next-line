@@ -95,6 +95,15 @@ int main(void)
 	return (0);
 }
 ```
+Then run the following command:
+```
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 -o my_program *c
+```
+
+Then, to run test our `main.c` function:
+```
+./my_program
+```
 
 ## Resources
 

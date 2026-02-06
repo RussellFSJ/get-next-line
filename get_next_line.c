@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/06 05:16:35 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:27:30 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static char	*handle_read_fail(char *stash);
-static char	*process_line(const char *s);
-static char	*update_stash(char* stash);
+static char	*process_line(const char *stash);
+static char	*update_stash(char *stash);
 
 char	*get_next_line(int fd)
 {
@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 		if (bytes_read < 0)
 			return (handle_read_fail(stash));
 		if (bytes_read == 0)
-			break;
+			break ;
 		buffer[bytes_read] = '\0';
 		stash = ft_strjoin(stash, buffer);
 	}
@@ -53,25 +53,25 @@ static char	*handle_read_fail(char *stash)
 	return (NULL);
 }
 
-static char	*process_line(const char *s)
+static char	*process_line(const char *stash)
 {
 	int		i;
 	char	*line;
 
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (stash[i] && stash[i] != '\n')
 		i++;
-	if (s[i] == '\n')
+	if (stash[i] == '\n')
 		i++;
 	line = malloc(i + 1);
 	if (!line)
 		return (NULL);
-	ft_memcpy(line, s, i);
+	ft_memcpy(line, stash, i);
 	line[i] = '\0';
 	return (line);
 }
 
-static char	*update_stash(char* stash)
+static char	*update_stash(char *stash)
 {
 	int		i;
 	size_t	length;

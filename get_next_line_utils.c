@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:43 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/06 04:43:49 by russ1337         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:19:19 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ size_t	ft_strlen(const char *s)
 
 	length = 0;
 	while (s[length])
-	{
 		length++;
-	}
 	return (length);
 }
 
