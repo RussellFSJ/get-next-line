@@ -6,14 +6,14 @@
 /*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/06 16:27:30 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/02/06 18:05:55 by rfoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 static char	*handle_read_fail(char *stash);
-static char	*process_line(const char *stash);
+static char	*process_line(char *stash);
 static char	*update_stash(char *stash);
 
 char	*get_next_line(int fd)
@@ -37,7 +37,7 @@ char	*get_next_line(int fd)
 		stash = ft_strjoin(stash, buffer);
 	}
 	if (!stash || *stash == '\0')
-		return (NULL);
+		return (free(stash), NULL);
 	line = process_line(stash);
 	stash = update_stash(stash);
 	return (line);
@@ -53,7 +53,7 @@ static char	*handle_read_fail(char *stash)
 	return (NULL);
 }
 
-static char	*process_line(const char *stash)
+static char	*process_line(char *stash)
 {
 	int		i;
 	char	*line;
@@ -65,7 +65,7 @@ static char	*process_line(const char *stash)
 		i++;
 	line = malloc(i + 1);
 	if (!line)
-		return (NULL);
+		return (free(stash), stash = NULL, NULL);
 	ft_memcpy(line, stash, i);
 	line[i] = '\0';
 	return (line);
@@ -81,15 +81,12 @@ static char	*update_stash(char *stash)
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	if (!stash[i])
-	{
-		free(stash);
-		return (NULL);
-	}
+		return (free(stash), stash = NULL, NULL);
 	i++;
 	length = ft_strlen(stash + i);
 	new_stash = malloc(length + 1);
 	if (!new_stash)
-		return (NULL);
+		return (free(stash), stash = NULL, NULL);
 	ft_memcpy(new_stash, stash + i, length);
 	new_stash[length] = '\0';
 	free(stash);
