@@ -35,10 +35,6 @@ Create `file.txt` and implement `main.c` to test `get_next_line` accordingly.
 echo -n "Hello\\nWorld\\nFrom\\n42 SG\\n" > file.txt
 ```
 
-```
-echo -n "HelloaWorldaFroma42 SGa" > file.txt
-```
-
 ### `main.c` (from `file.txt`)
 
 ```
