@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rfoo <rfoo@student.42singapore.sg>         +#+  +:+       +#+        */
+/*   By: russ1337 <russ1337@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:10:45 by rfoo              #+#    #+#             */
-/*   Updated: 2026/02/07 19:37:01 by rfoo             ###   ########.fr       */
+/*   Updated: 2026/02/17 03:27:35 by russ1337         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*handle_read_fail(char *stash);
-static char	*process_line(char *stash, char* buffer);
-static char	*update_stash(char *stash, char* buffer);
+static char	*handle_free(char *stash, char *buffer);
+static char	*process_line(char *stash);
+static char	*update_stash(char *stash);
 
 char	*get_next_line(int fd)
 {
@@ -39,8 +39,8 @@ char	*get_next_line(int fd)
 	}
 	if (!stash || *stash == '\0')
 		return (handle_free(stash, buffer));
-	line = process_line(stash, buffer);
-	stash = update_stash(stash, buffer);
+	line = process_line(stash);
+	stash = update_stash(stash);
 	free(buffer);
 	return (line);
 }
@@ -56,7 +56,7 @@ static char	*handle_free(char *stash, char *buffer)
 	return (NULL);
 }
 
-static char	*process_line(char *stash, char *buffer)
+static char	*process_line(char *stash)
 {
 	int		i;
 	char	*line;
@@ -68,13 +68,16 @@ static char	*process_line(char *stash, char *buffer)
 		i++;
 	line = malloc(i + 1);
 	if (!line)
-		return (handle_free(stash, buffer));
+	{
+		free(stash);
+		return (NULL);
+	}
 	ft_memcpy(line, stash, i);
 	line[i] = '\0';
 	return (line);
 }
 
-static char	*update_stash(char *stash, char *buffer)
+static char	*update_stash(char *stash)
 {
 	int		i;
 	size_t	length;
@@ -84,12 +87,18 @@ static char	*update_stash(char *stash, char *buffer)
 	while (stash[i] && stash[i] != '\n')
 		i++;
 	if (!stash[i])
-		return (handle_free(stash, buffer));
+	{
+		free(stash);
+		return (NULL);
+	}
 	i++;
 	length = ft_strlen(stash + i);
 	new_stash = malloc(length + 1);
 	if (!new_stash)
-		return (handle_free(stash, buffer));
+	{
+		free(stash);
+		return (NULL);
+	}
 	ft_memcpy(new_stash, stash + i, length);
 	new_stash[length] = '\0';
 	free(stash);
